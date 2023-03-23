@@ -74,7 +74,7 @@ print (result)
 Создайте ещё одну функцию, которая принимает в себя список словарей с данными ответчика. Используйте цикл for для генерации всех возможных вариантов данной шапки с вызовом первой функции внутри тела цикла for и выводом данных. которые она возвращает в консоль.
 """
 
-repondents = [
+respondents = [
     {'full_name': 'общество с ограниченной ответственностью " ПРОДСЕРВИС "', 'short_name': 'ООО " ПРОДСЕРВИС "',
      'inn': '2465081302', 'ogrn': '1042402640125', 'region': 'Красноярский край', 'category': 'Обычная организация',
      'category_code': 'SimpleOrganization', 'bankruptcy_id': '12182', 'case_number': 'А33-2794/2011',
@@ -1510,14 +1510,13 @@ def main():
     for i in respondents:
         case_number = i.get ("case_number")
         if case_number:
-            code=case_number.split("-")[0]
+            code = case_number.split("-")[0]
             for y in courts:
-                if y ["court_code"]==code:
-                    print (case_number)
-                    print (y)
+                if y["court_code"]==code:
+                    print(y)
+
     print ("stop")
 
-text = f"В {court_name}{court_address} \n\t"
-f"Истец: {plaintiff_name}\n {p_inn},{p_OGRN}\n\t {plaintiff_address_} \n\t"
-f"Ответчик: {defendant_name}\n {d_inn}, {d_OGRN}\n\t {defendant_address_}\n\t {case_number}"
-print (text)
+if __name__== "__main__":
+    main()
+    print ("stop")
