@@ -23,7 +23,8 @@ print (factorial(int(input('Введите число:'))))
 
 a = int(input('Введите первое число:'))
 b = int(input('Введите второе число:'))
-с = int(input('Введите третье число:'))
+c = int(input('Введите третье число:'))
+
 def maximum (a,b,c):
    list=[a,b,c]
    return max(list)
@@ -34,7 +35,7 @@ print (maximum (a,b,c))
 
 a = int(input("Длина первого катета"))
 b = int(input("Длина второго катета"))
-def square ():
+def square (a,b):
     return a * b/2
 result = square (a,b)
 print (result)
@@ -1517,6 +1518,6 @@ def main():
     print ("stop")
 
 text = f"В {court_name}{court_address} \n\t"
-       f"Истец: {plaintiff_name}\n {p_inn},{p_OGRN}\n\t {plaintiff_address_} "
-       f"Ответчик: {defendant_name}\n {d_inn}, {d_OGRN}\n\t {defendant_address_}\n\t {case_number}"
-    print (text)
+f"Истец: {plaintiff_name}\n {p_inn},{p_OGRN}\n\t {plaintiff_address_} \n\t"
+f"Ответчик: {defendant_name}\n {d_inn}, {d_OGRN}\n\t {defendant_address_}\n\t {case_number}"
+print (text)
