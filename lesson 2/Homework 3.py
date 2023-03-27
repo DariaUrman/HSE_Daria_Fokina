@@ -9,15 +9,18 @@
 Расчёт площади прямоугольного треугольника.
 Принимает в качестве аргумента размер двух катетов треугольника. Возвращает площадь треугольника.
 """
+
+
 # Функция вычисления факториала числа
 
 def factorial(n):
     if n == 1:
         return n
     else:
-        return n * factorial(n-1)
-print (factorial(int(input('Введите число:'))))
+        return n * factorial(n - 1)
 
+
+print(factorial(int(input('Введите число:'))))
 
 # Поиск наибольшего числа из трех
 
@@ -25,22 +28,26 @@ a = int(input('Введите первое число:'))
 b = int(input('Введите второе число:'))
 c = int(input('Введите третье число:'))
 
-def maximum (a,b,c):
-   list=[a,b,c]
-   return max(list)
 
-print (maximum (a,b,c))
+def maximum(a, b, c):
+    list = [a, b, c]
+    return max(list)
+
+
+print(maximum(a, b, c))
 
 # Расчёт площади прямоугольного треугольника
 
 a = int(input("Длина первого катета"))
 b = int(input("Длина второго катета"))
-def square (a,b):
-    return a * b/2
-result = square (a,b)
-print (result)
 
 
+def square(a, b):
+    return a * b / 2
+
+
+result = square(a, b)
+print(result)
 
 """"Создайте функцию для генерации текста с адресом суда.
 
@@ -1506,17 +1513,32 @@ courts = [{'court_name': 'Арбитражного суда Алтайского
            'court_email': 'info@fasco.arbitr.ru', 'court_website': 'http://fasco.arbitr.ru/',
            'court_head': 'Орлов Александр Владимирович'}]
 
-def main():
-    for i in respondents:
-        case_number = i.get ("case_number")
-        if case_number:
-            code = case_number.split("-")[0]
-            for y in courts:
-                if y["court_code"]==code:
-                    print(y)
+courts = {i["court_code"]: i for i in courts}
+def new_header(court, plaintiff, respondent):
+    header = f"\nВ {court['court_name']}\n" \
+             f"Адрес: {court['court_address']}\n" \
+             f"" \
+             f"Истец: {plaintiff['name']}\n" \
+             f"ИНН {plaintiff['inn']} ОГРНИП {plaintiff['ogrnip']}\n" \
+             f"Адрес: {plaintiff['address']}\n" \
+             f"" \
+             f"Ответчик: {respondent['short_name']}\n" \
+             f"ИНН{respondent['inn']} ОГРН {respondent['ogrn']}\n" \
+             f"Адрес: {respondent['address']}\n" \
+             f"" \
+             f"Номер дела {respondent['case_number']}\n"
+    return header
+def new_plaintiff():
+    plaintiff = {
+        "name": "Фокина Дарья Игоревна",
+        "inn": "777777777777",
+        "ogrnip": "888888888888",
+        "address": "г.Москва"
+    }
+    cleaned_respondents = [i for i in respondents if i.get("case_number")]
+    for respondent in cleaned_respondents:
+        court_code = respondent["case_number"].split("-")[0]
+        court = courts[court_code]
+        result = new_header(court, plaintiff, respondent)
+        print(result)
 
-    print ("stop")
-
-if __name__== "__main__":
-    main()
-    print ("stop")
