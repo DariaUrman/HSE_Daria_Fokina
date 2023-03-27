@@ -55,7 +55,7 @@ def inn_check_sums (nums, type):
     }
     n = 0
     t = inn_check_type[type]
-    for i in range (0, lent(t)):
+    for i in range (0, len(t)):
         n += nums[i]*t[i]
     return n % 11 % 10
 def inn_check (inn):
