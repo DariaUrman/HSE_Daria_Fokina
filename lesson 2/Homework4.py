@@ -63,7 +63,7 @@ def inn_check (inn):
     nums = [int(x) for x in n]
     if len(n) == 10:
         n_1 = inn_check_sums(nums, 'n_10')
-        return n_1 == nums [-1]
+        return n_1 == nums [-1], True
     else:
         return False
 def inn_check_sums_ip_p (nums_ip_p, type_ip_p):
@@ -82,6 +82,6 @@ def inn_ip_p_check (inn_ip_p):
     if len(n_ip_p) == 12:
         n_2 = inn_check_sums_ip_p(nums_ip_p, 'n_2_12')
         n_1 = inn_check_sums_ip_p(nums_ip_p, 'n_1_12')
-        return n_2 == nums_ip_p[-2] and n_1 == nums_ip_p[-1]
+        return n_2 == nums_ip_p[-2] and n_1 == nums_ip_p[-1], True
     else:
         return False
