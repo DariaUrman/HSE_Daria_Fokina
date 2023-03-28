@@ -33,6 +33,7 @@ with open("/Users/dariafokina/Downloads/traders.txt", "w") as txt_file:
         txt_file.writelines("%s\n" % line for line in lines)
 
 #c.Сохраните информацию об ИНН, ОГРН и адресе организаций из файла «traders.txt» в файл «traders.csv».
+import csv
 
 
 
