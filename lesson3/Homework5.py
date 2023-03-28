@@ -37,15 +37,13 @@ with open("/Users/dariafokina/Downloads/traders.txt", "w") as txt_file:
 
 import csv
 
-with open("/Users/dariafokina/Downloads/traders.txt", "r") as in_file:
+with open("/Users/dariafokina/Downloads/traders.txt", "r") as in_file, open('traders.csv', 'w') as out_file:
     stripped = (line.strip() for line in in_file)
     lines = (line.split(",") for line in stripped if line)
+    writer = csv.writer(out_file)
+    writer.writerow(('inn', 'ogrn', 'address'))
+    writer.writerows(lines)
 
-file = open('traders.csv', 'w')
-writer = csv.writer(out_file)
-writer.writerow(('inn', 'ogrn', 'address'))
-writer.writerows(lines)
-file.close ('traders.csv')
 
 
 
