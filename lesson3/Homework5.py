@@ -3,11 +3,36 @@
 Найдите информацию об организациях с этими ИНН в файле «traders.json»;
 Сохраните информацию об ИНН, ОГРН и адресе организаций из файла «traders.txt» в файл «traders.csv»."""
 
-with open ("traders.txt", "r") as f:
-    print (f.read())
+#a.Получите список ИНН из файла «traders.txt»;
 
-a = re.findall(r"\b[0-9]{10}\b", f)
-print(a)
+with open("/Users/dariafokina/Downloads/traders.txt", "r") as f:
+    print(f.read())
+
+#b.Найдите информацию об организациях с этими ИНН в файле «traders.json»;
+import json
+
+with open('/Users/dariafokina/Downloads/traders.json', 'r') as json_file:
+    traders = json.load(json_file)
+
+    result = [
+        [a for a in traders if a['inn'] == '7702758341'],
+        [b for b in traders if b['inn'] == '7802654025'],
+        [c for c in traders if c['inn'] == '5027217264'],
+        [d for d in traders if d['inn'] == '6324042940'],
+        [e for e in traders if e['inn'] == '5834031870'],
+        [f for f in traders if f['inn'] == '1657061756'],
+        [g for g in traders if g['inn'] == '3665044042'],
+        [h for h in traders if h['inn'] == '6453102410']
+
+    ]
+
+    print(result)
+
+lines = result
+with open("/Users/dariafokina/Downloads/traders.txt", "w") as txt_file:
+        txt_file.writelines("%s\n" % line for line in lines)
+
+#c.Сохраните информацию об ИНН, ОГРН и адресе организаций из файла «traders.txt» в файл «traders.csv».
 
 
 
