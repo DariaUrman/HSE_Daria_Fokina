@@ -38,14 +38,17 @@ with open("/Users/dariafokina/Downloads/traders.txt", "w") as txt_file:
 import csv
 
 with open("/Users/dariafokina/Downloads/traders.txt", "r") as in_file, open('traders.csv', 'w') as out_file:
-    stripped = (line.strip() for line in in_file)
-    lines = (line.split(",") for line in stripped if line)
-    writer = csv.writer(out_file)
-    writer.writerows(lines)
-
-
-
-
+    names = ["inn", "ogrn", "address"]
+    file_writer = csv.DictWriter(out_file, lineterminator="\r", fieldnames=names)
+    file_writer.writeheader()
+    file_writer.writerow({'inn': '7702758341', 'ogrn': '1117746257640', 'address': '119334, г Москва, Гагаринский р-н, ул Косыгина, д 5, помещ V ком 10'})
+    file_writer.writerow({'inn': '7802654025', 'ogrn': '1187847030194', 'address': '197022, г Санкт-Петербург, Петроградский р-н, ул Профессора Попова, д 41/5 литера а, помещ 3Н офис 1'})
+    file_writer.writerow({'inn': '5027217264', 'ogrn': '1145027017618', 'address': '140000, Московская обл, г Люберцы, Октябрьский пр-кт, д 249, помещ 22 офис 3'})
+    file_writer.writerow({'inn': '6324042940', 'ogrn': '1136324009326', 'address': '445054, Самарская обл, г Тольятти, Центральный р-н, ул Карбышева, д 12, ком 10'})
+    file_writer.writerow({'inn': '5834031870', 'ogrn': '1055802033737', 'address': '440023, Пензенская обл, г Пенза, Железнодорожный р-н, ул Стрельбищенская, д 60, офис 303'})
+    file_writer.writerow({'inn': '1657061756', 'ogrn': '1061685050350', 'address': '420095, Респ Татарстан, г Казань, Московский р-н, ул Энергетиков, д 2, офис 17'})
+    file_writer.writerow({'inn': '3665044042', 'ogrn': '1043600013929', 'address': '394038, Воронежская обл, г Воронеж, ул Дорожная, д 18, офис 7'})
+    file_writer.writerow({'inn': '6453102410', 'ogrn': '1086453005594', 'address': '410033, Саратовская обл, г Саратов, Ленинский р-н, пр-кт им 50 лет Октября, д 101'})
 
 """2.Напишите регулярное выражение для поиска email-адресов в тексте.
 
