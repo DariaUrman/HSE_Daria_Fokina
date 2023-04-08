@@ -37,7 +37,7 @@ with open("/Users/dariafokina/Downloads/traders.txt", "w") as txt_file:
 
 import csv
 
-with open("/Users/dariafokina/Downloads/traders.txt", "r") as in_file, open('traders.csv', 'w') as out_file:
+with open('traders.csv', 'w') as out_file:
     names = ["inn", "ogrn", "address"]
     file_writer = csv.DictWriter(out_file, lineterminator="\r", fieldnames=names)
     file_writer.writeheader()
@@ -73,4 +73,22 @@ with open("/Users/dariafokina/Downloads/traders.txt", "r") as in_file, open('tra
 
 Сохраните собранные данные в файл «emails.json».
 """
+import json
+import re
 
+with open('/Users/dariafokina/Downloads/1000_efrsb_messages.json', 'r') as json_register_file:
+    register = json.load(json_register_file)
+results={}
+for i in register:
+    email = re.findall(r'\S+@\S+\.\S+', i['msg_text'])
+    for one_email in email:
+        one_email=one_email.lower()
+        listed=results.get(i['publisher_inn'])
+        if listed and one_email not in listed:
+            results[i['publisher_inn']].append(one_email)
+        elif not listed:
+            new_msg={i['publisher_inn']: [one_email]}
+            results.update(new_msg)
+    with open('email.json', "w") as json_register_file:
+        json.dump(results, json_register_file)
+    print("stop")
