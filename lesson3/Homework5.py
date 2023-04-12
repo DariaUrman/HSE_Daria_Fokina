@@ -78,16 +78,16 @@ import re
 
 with open('/Users/dariafokina/Downloads/1000_efrsb_messages.json', 'r') as json_register_file:
     register = json.load(json_register_file)
-results={}
+results = {}
 for i in register:
     email = re.findall(r'\S+@\S+\.\S+', i['msg_text'])
     for one_email in email:
-        one_email=one_email.lower()
-        listed=results.get(i['publisher_inn'])
+        one_email = one_email.lower()
+        listed = results.get(i['publisher_inn'])
         if listed and one_email not in listed:
             results[i['publisher_inn']].append(one_email)
         elif not listed:
-            new_msg={i['publisher_inn']: [one_email]}
+            new_msg = {i['publisher_inn']: [one_email]}
             results.update(new_msg)
     with open('email.json', "w") as json_register_file:
         json.dump(results, json_register_file)
