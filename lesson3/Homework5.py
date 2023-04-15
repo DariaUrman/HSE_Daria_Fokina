@@ -5,14 +5,14 @@
 
 #a.Получите список ИНН из файла «traders.txt»;
 
-with open("/Users/dariafokina/Downloads/traders.txt", "r") as f:
+with open("traders.txt", "r") as f:
     print(f.read())
 
 #b.Найдите информацию об организациях с этими ИНН в файле «traders.json»;
 
 import json
 
-with open('/Users/dariafokina/Downloads/traders.json', 'r') as json_file:
+with open('traders.json', 'r') as json_file:
     traders = json.load(json_file)
 
     result = [
@@ -76,11 +76,11 @@ with open('traders.csv', 'w') as out_file:
 import json
 import re
 
-with open('/Users/dariafokina/Downloads/1000_efrsb_messages.json', 'r') as json_register_file:
+with open('1000_efrsb_messages.json', 'r') as json_register_file:
     register = json.load(json_register_file)
 results = {}
 for i in register:
-    email = re.findall(r'\S+@\S+\.\S+', i['msg_text'])
+    email = re.findall(r'\\s([\\w._$+~-]+@[a-z]+\.[a-z]+)(?:\\s|$|,|\.)', i['msg_text'])
     for one_email in email:
         one_email = one_email.lower()
         listed = results.get(i['publisher_inn'])
