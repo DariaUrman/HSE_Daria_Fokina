@@ -3,21 +3,26 @@
 На сайте https://kad.arbitr.ru/ в каждом деле приложен .ics файл (стандартное расширение файлов для программ календарей), в котором присутствует информация о дате и времени судебных заседаний (вы можете открыть его, кликнув по дате заседания в карточке). Однако в них присутствует и «пустая» информация, дублирующая информацию о событиях по делу, но не относящуюся к конкретным судебным заседаниям.
 Чтобы ознакомиться со структурой данных в ics файле и провести первичный анализ, достаточно открыть его в любом текстовом редакторе"""
 
-from ics import Calendar, Event
-from datetime import datetime
-
-with open('/Users/dariafokina/Downloads/А40-183194-2015.ics', 'r') as c_c:
-    f = Calendar(c_c.read())
-    new_c = Calendar()
-    for event in f.events:
-        if event.begin and isinstance(event.begin, datetime):
-            new_c.events.add(event)
+from ics import Calendar
 import json
-with open('court_dates.json', 'w') as c_c:
-    json.dump(new_c,c_c)
+from datetime import datetime, timedelta
+import zoneinfo
 
-
-
+def cleaned_list(case_number):
+    zone = zoneinfo.ZoneInfo("Europe/Moscow")
+    with open(f"{case_number}.ics", "r") as f:
+        all_list = f.read()
+    c = Calendar(all_list)
+    cleaned_events = [i for i in c.events if i.begin.datetime > datetime.now(zone) - timedelta(days=5000)]
+    final_list = [{"case_number": f"{case_number}",
+               "start": i.begin.datetime.isoformat(),
+               "end": i.end.datetime.isoformat(),
+               "location": i.location.strip(),
+               "description": i.description
+               } for i in cleaned_events]
+    with open("court_dates.json", "w") as f:
+        json.dump(final_list, f)
+    return final_list
 
 
 
