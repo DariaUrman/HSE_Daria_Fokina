@@ -31,7 +31,7 @@ class CourtCase:
         if participant in case_participants:
             print(self.case_participants.remove(participant))
 
-    def make_a_decision(self,verdict):
-        self.verdict=verdict
+    def make_a_decision(self, verdict):
+        self.verdict = verdict
         self.is_finished = True
         print(f"{self.verdict} решение по делу вынесено.")
