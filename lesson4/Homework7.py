@@ -20,6 +20,7 @@ class CourtCase:
         self.listening_datetimes = listening_datetimes
         self.is_finished = False
         self.verdict = verdict
+
     def set_a_listening_datetime(self, new_datetimes):
         print(self.listening_datetimes.append(new_datetimes))
 
