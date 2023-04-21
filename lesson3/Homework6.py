@@ -10,6 +10,7 @@ import zoneinfo
 
 def cleaned_list(case_number):
     zone = zoneinfo.ZoneInfo("Europe/Moscow")
+    #f-string использовано, чтобы в наименование файла подавался аргумент
     with open(f"{case_number}.ics", "r") as f:
         all_list = f.read()
     c = Calendar(all_list)
