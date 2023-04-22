@@ -22,9 +22,13 @@ class CourtCase:
         self.verdict = verdict
 
     def set_a_listening_datetime(self, new_datetimes):
+        new_datetimes = {
+            "date": datetime,
+            "location": location
+        }
         print(self.listening_datetimes.append(new_datetimes))
 
-    def add_participant(self,participant):
+    def add_participant(self, participant):
         print(self.case_participants.append(participant))
 
     def remove_participant(self, participant):
