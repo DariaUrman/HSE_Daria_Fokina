@@ -24,29 +24,41 @@ r_list = [random.randint(10, 250000000) for i in range(10)]
 print(r_list)
 
 import time
+
+
 def linear_search(r_array, element):
     start_t = time.time()
     for i in range(len(r_array)):
         if r_array[i] == element:
-            duration = time.time()-start_t
+            duration = time.time() - start_t
             return i, duration
     else:
         duration = time.time() - start
         return -1, duration
-def binary_search(r_array, a):
+
+
+def binary_search(r_array, val):
     start_tb = time.time()
     first = 0
     last = len(r_array) - 1
     index = -1
     while first <= last and index == -1:
         mid_val = (first + last) // 2
-        if r_array[mid_val] == a:
+        if r_array[mid_val] == val:
             index = mid_val
         else:
-            if a < r_array[mid_val]:
+            if val < r_array[mid_val]:
                 last = mid_val - 1
             else:
                 first = mid_val + 1
-        duration_tb = time.time() - start_tb
+    duration_tb = time.time() - start_tb
     return index, duration_tb
 
+
+result_l, duration_l = linear_search(r_array, element=240735194)
+print(result_l)
+print(duration_l)
+
+result_b, duration_b = binary_search(r_array, val=240735194)
+print(result_b)
+print(duration_b)
