@@ -28,6 +28,7 @@ for i in range(100000):
     )
 print(*new_array, sep="\n")
 
+
 def bubble_sort(n_array):
     n = len(n_array)
     for i in range(n - 1):
@@ -38,10 +39,10 @@ def bubble_sort(n_array):
                 n_array[j + 1] = bubble
     return n_array
 
+
 n_array = [random.randint(-50, 50) for i in range(100000)]
 sorted_n_array = bubble_sort(n_array)
 print(sorted_n_array)
-
 
 new_array = []
 for i in range(100000):
@@ -57,5 +58,3 @@ print(new_array)
 
 new_array.sort(key=lambda x: x["num_2"])
 print(new_array)
-
-
