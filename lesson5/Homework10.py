@@ -50,4 +50,8 @@ for i in range(100000):
             "num_2": random.randint(1, 1000000)
         }
     )
-print((new_array.sort(key=lambda x: (x[0], x[1]))))
+sorted_new_array_1 = new_array.sort(key=lambda x: x["num_1"])
+sorted_new_array_2 = new_array.sort(key=lambda x: x["num_2"])
+print(sorted_new_array_1)
+print(sorted_new_array_2)
+
