@@ -42,6 +42,7 @@ n_array = [random.randint(-50, 50) for i in range(100000)]
 sorted_n_array = bubble_sort(n_array)
 print(sorted_n_array)
 
+
 new_array = []
 for i in range(100000):
     new_array.append(
@@ -50,8 +51,11 @@ for i in range(100000):
             "num_2": random.randint(1, 1000000)
         }
     )
-sorted_new_array_1 = new_array.sort(key=lambda x: x["num_1"])
-sorted_new_array_2 = new_array.sort(key=lambda x: x["num_2"])
-print(sorted_new_array_1)
-print(sorted_new_array_2)
+
+new_array.sort(key=lambda x: x["num_1"])
+print(new_array)
+
+new_array.sort(key=lambda x: x["num_2"])
+print(new_array)
+
 
