@@ -28,7 +28,6 @@ class ParserCBRF:
             currency_rate = currency_line[4].text.strip()
             self.currency[currency_name] = currency_rate
             continue
-            return self.currency
 
     def __save_file(self):
         with open("currency.json", "w") as file:
