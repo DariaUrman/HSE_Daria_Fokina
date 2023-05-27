@@ -10,14 +10,11 @@ import requests
 from bs4 import BeautifulSoup
 import json
 
-
 class ParserCBRF:
     def __init__(self):
         self.url = "https://cbr.ru/currency_base/daily/"
         self.currency = {}
         self.start()
-
-
     def __get_rates_soup(self):
         r = requests.get(self.url)
         soup = BeautifulSoup(r.text, "html.parser")
@@ -28,14 +25,12 @@ class ParserCBRF:
             currency_rate = currency_line[4].text.strip()
             self.currency[currency_name] = currency_rate
             continue
-
     def __save_file(self):
         with open("currency.json", "w") as file:
-            json.dump(self.currency, file)
+            json.dump(self.currency, file, indent="\n")
     def start(self):
         self.__get_rates_soup()
         self.__save_file()
-
 def main():
     parser = ParserCBRF()
     currency = parser.start()
