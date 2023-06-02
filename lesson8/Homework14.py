@@ -7,7 +7,7 @@ button_2 = KeyboardButton("Когда -тся?")
 button_3 = KeyboardButton("Когда -ться?")
 button_4 = KeyboardButton("Где посмотреть подробнее?")
 
-main_menu = [[button_1, button_2, button_3, button_4]]
+main_menu = [[button_1, button_2], [button_4, button_3]]
 
 def start(update:Update, context:CallbackContext):
     context.bot.send_message(chat_id = update.effective_chat.id, text = "Привет. Я бот-справочник по -тся и -ться в глаголах.", reply_markup=ReplyKeyboardMarkup(main_menu, one_time_keyboard=False, resize_keyboard=True))
