@@ -151,6 +151,7 @@ class ParserCBRF:
     def __today_human_date(self):
         today = date.today().strftime("%d.%m.%Y")
         return today
+
     def __get_page(self):
         self.url = f"http://cbr.ru/hd_base/metall/metall_base_new/?" \
                    f"UniDbQuery.Posted=True&" \
@@ -163,6 +164,7 @@ class ParserCBRF:
                    f"UniDbQuery.so=1"
         r = requests.get(self.url)
         return r.text
+
     def __get_au_prices_soup(self):
         r = requests.get(self.url)
         soup = BeautifulSoup(r.text, "html.parser")
@@ -177,6 +179,7 @@ class ParserCBRF:
             self.au_prices[au_header] = au_date, au_price
             print(str(self.au_prices).replace("(", "").replace(")", ""))
             continue
+
     def __get_ag_prices_soup(self):
         r = requests.get(self.url)
         soup = BeautifulSoup(r.text, "html.parser")
@@ -191,6 +194,7 @@ class ParserCBRF:
             self.ag_prices[ag_header] = ag_date, ag_price
             print(str(self.ag_prices).replace("(", "").replace(")", ""))
             continue
+
     def __get_pt_prices_soup(self):
         r = requests.get(self.url)
         soup = BeautifulSoup(r.text, "html.parser")
@@ -205,6 +209,7 @@ class ParserCBRF:
             self.pt_prices[pt_header] = pt_date, pt_price
             print(str(self.pt_prices).replace("(", "").replace(")", ""))
             continue
+
     def __get_pd_prices_soup(self):
         r = requests.get(self.url)
         soup = BeautifulSoup(r.text, "html.parser")
@@ -227,12 +232,14 @@ class ParserCBRF:
             os.makedirs("parsed_data")
         with open(os.path.join("parsed_data", "metal_prices.json"), "w") as file:
             json.dump(prices, file, indent=" ")
+
     def start(self):
         self.__get_au_prices_soup()
         self.__get_ag_prices_soup()
         self.__get_pt_prices_soup()
         self.__get_pd_prices_soup()
         self.__save_file()
+
 def main():
     parser = ParserCBRF()
     prices = parser.start()
