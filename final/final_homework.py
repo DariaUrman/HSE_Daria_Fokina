@@ -156,7 +156,7 @@ class ParserCBRF:
         self.url = f"http://cbr.ru/hd_base/metall/metall_base_new/?" \
                    f"UniDbQuery.Posted=True&" \
                    f"UniDbQuery.From=01.07.2008&" \
-                   f"UniDbQuery.To={__today_human_date()}" \
+                   f"UniDbQuery.To={self.__today_human_date()}" \
                    f"UniDbQuery.Gold=true&" \
                    f"UniDbQuery.Silver=true&" \
                    f"UniDbQuery.Platinum=true&" \
@@ -226,12 +226,12 @@ class ParserCBRF:
             continue
 
     def __save_file(self):
-        prices = {**self.au_prices, **self.ag_prices, **self.pt_prices,**self.pd_prices}
-        print(print(str(prices).replace("(", "").replace(")", "")))
+        prices = {**self.au_prices, **self.ag_prices, **self.pt_prices, **self.pd_prices}
+        print(str(prices).replace("(", "").replace(")", ""))
         if not os.path.exists("parsed_data"):
             os.makedirs("parsed_data")
         with open(os.path.join("parsed_data", "metal_prices.json"), "w") as file:
-            json.dump(prices, file, indent=" ")
+            json.dump(prices, file, ensure_ascii=False, indent=" ")
 
     def start(self):
         self.__get_au_prices_soup()
