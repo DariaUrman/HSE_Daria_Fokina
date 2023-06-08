@@ -132,27 +132,6 @@ from datetime import date
 import os
 class ParserCBRF:
     def __init__(self):
-        self.url = f"http://cbr.ru/hd_base/metall/metall_base_new/?"\
-                   f"UniDbQuery.Posted=True&"\
-                   f"UniDbQuery.From=01.07.2008&"\
-                   f"UniDbQuery.To=05.06.2023&"\
-                   f"UniDbQuery.Gold=true&"\
-                   f"UniDbQuery.Silver=true&"\
-                   f"UniDbQuery.Platinum=true&"\
-                   f"UniDbQuery.Palladium=true&"\
-                   f"UniDbQuery.so=1"
-
-        self.au_prices = {}
-        self.ag_prices = {}
-        self.pt_prices = {}
-        self.pd_prices = {}
-        self.start()
-
-    def __today_human_date(self):
-        today = date.today().strftime("%d.%m.%Y")
-        return today
-
-    def __get_page(self):
         self.url = f"http://cbr.ru/hd_base/metall/metall_base_new/?" \
                    f"UniDbQuery.Posted=True&" \
                    f"UniDbQuery.From=01.07.2008&" \
@@ -162,9 +141,14 @@ class ParserCBRF:
                    f"UniDbQuery.Platinum=true&" \
                    f"UniDbQuery.Palladium=true&" \
                    f"UniDbQuery.so=1"
-        r = requests.get(self.url)
-        return r.text
-
+        self.au_prices = {}
+        self.ag_prices = {}
+        self.pt_prices = {}
+        self.pd_prices = {}
+        self.start()
+    def __today_human_date(self):
+        today = date.today().strftime("%d.%m.%Y")
+        return today
     def __get_au_prices_soup(self):
         r = requests.get(self.url)
         soup = BeautifulSoup(r.text, "html.parser")
@@ -231,7 +215,7 @@ class ParserCBRF:
         if not os.path.exists("parsed_data"):
             os.makedirs("parsed_data")
         with open(os.path.join("parsed_data", "metal_prices.json"), "w") as file:
-            json.dump(prices, file, ensure_ascii=False, indent=" ")
+            json.dump(prices, file, ensure_ascii=False)
 
     def start(self):
         self.__get_au_prices_soup()
