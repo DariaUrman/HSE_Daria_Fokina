@@ -128,14 +128,15 @@ Output:
 import requests
 from bs4 import BeautifulSoup
 import json
-from datetime import date
 import os
+from datetime import date
+
 class ParserCBRF:
     def __init__(self):
         self.url = f"http://cbr.ru/hd_base/metall/metall_base_new/?" \
                    f"UniDbQuery.Posted=True&" \
                    f"UniDbQuery.From=01.07.2008&" \
-                   f"UniDbQuery.To={self.__today_human_date()}" \
+                   f"UniDbQuery.To={self.__today_human_date()}&" \
                    f"UniDbQuery.Gold=true&" \
                    f"UniDbQuery.Silver=true&" \
                    f"UniDbQuery.Platinum=true&" \
@@ -146,89 +147,62 @@ class ParserCBRF:
         self.pt_prices = {}
         self.pd_prices = {}
         self.start()
+
     def __today_human_date(self):
         today = date.today().strftime("%d.%m.%Y")
         return today
-    def __get_au_prices_soup(self):
+
+    def __get_page(self):
         r = requests.get(self.url)
-        soup = BeautifulSoup(r.text, "html.parser")
+        return r.text
+
+    def __get_prices_soup(self):
+        r = self.__get_page()
+        soup = BeautifulSoup(r, "html.parser")
         raw_soup = soup.find("table", "data")
         header = raw_soup.find_all("th")[1:]
         au_header = header[0].text.strip()
-        raw_price = raw_soup.find_all("tr")[1:]
-        for line in raw_price:
-            raw_line = line.find_all("td")
-            au_date = raw_line[0].text.strip()
-            au_price = raw_line[1].text.strip().replace(",", ".")
-            self.au_prices[au_header] = au_date, au_price
-            print(str(self.au_prices).replace("(", "").replace(")", ""))
-            continue
-
-    def __get_ag_prices_soup(self):
-        r = requests.get(self.url)
-        soup = BeautifulSoup(r.text, "html.parser")
-        raw_soup = soup.find("table", "data")
-        header = raw_soup.find_all("th")[1:]
         ag_header = header[1].text.strip()
-        raw_price = raw_soup.find_all("tr")[1:]
-        for line in raw_price:
-            raw_line = line.find_all("td")
-            ag_date = raw_line[0].text.strip()
-            ag_price = raw_line[2].text.strip().replace(",", ".")
-            self.ag_prices[ag_header] = ag_date, ag_price
-            print(str(self.ag_prices).replace("(", "").replace(")", ""))
-            continue
-
-    def __get_pt_prices_soup(self):
-        r = requests.get(self.url)
-        soup = BeautifulSoup(r.text, "html.parser")
-        raw_soup = soup.find("table", "data")
-        header = raw_soup.find_all("th")[1:]
         pt_header = header[2].text.strip()
-        raw_price = raw_soup.find_all("tr")[1:]
-        for line in raw_price:
-            raw_line = line.find_all("td")
-            pt_date = raw_line[0].text.strip()
-            pt_price = raw_line[3].text.strip().replace(",", ".")
-            self.pt_prices[pt_header] = pt_date, pt_price
-            print(str(self.pt_prices).replace("(", "").replace(")", ""))
-            continue
-
-    def __get_pd_prices_soup(self):
-        r = requests.get(self.url)
-        soup = BeautifulSoup(r.text, "html.parser")
-        raw_soup = soup.find("table", "data")
-        header = raw_soup.find_all("th")[1:]
         pd_header = header[3].text.strip()
         raw_price = raw_soup.find_all("tr")[1:]
         for line in raw_price:
             raw_line = line.find_all("td")
+            au_date = raw_line[0].text.strip()
+            au_price = raw_line[1].text.strip().replace(",", ".").replace(" ", "")
+            ag_date = raw_line[0].text.strip()
+            ag_price = raw_line[2].text.strip().replace(",", ".").replace(" ", "")
+            pt_date = raw_line[0].text.strip()
+            pt_price = raw_line[3].text.strip().replace(",", ".").replace(" ", "")
             pd_date = raw_line[0].text.strip()
-            pd_price = raw_line[4].text.strip().replace(",", ".")
-            self.pd_prices[pd_header] = pd_date, pd_price
-            print(str(self.pd_prices).replace("(", "").replace(")", ""))
-            continue
+            pd_price = raw_line[3].text.strip().replace(",", ".").replace(" ", "")
+            self.au_prices[au_date] = au_header, au_price
+            self.ag_prices[ag_date] = ag_header, ag_price
+            self.pt_prices[pt_date] = pt_header, pt_price
+            self.pd_prices[pd_date] = pd_header, pd_price
+            print(self.au_prices,
+                  self.ag_prices,
+                  self.pt_prices,
+                  self.pd_prices)
+            pass
 
     def __save_file(self):
-        prices = {**self.au_prices, **self.ag_prices, **self.pt_prices, **self.pd_prices}
-        print(str(prices).replace("(", "").replace(")", ""))
+        prices = self.au_prices, self.ag_prices, self.pt_prices, self.pd_prices
         if not os.path.exists("parsed_data"):
             os.makedirs("parsed_data")
         with open(os.path.join("parsed_data", "metal_prices.json"), "w") as file:
             json.dump(prices, file, ensure_ascii=False)
 
     def start(self):
-        self.__get_au_prices_soup()
-        self.__get_ag_prices_soup()
-        self.__get_pt_prices_soup()
-        self.__get_pd_prices_soup()
+        self.__get_prices_soup()
         self.__save_file()
 
 def main():
     parser = ParserCBRF()
-    prices = parser.start()
-    return prices
+    parser.start()
+    print("stop")
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     main()
     print("stop")
