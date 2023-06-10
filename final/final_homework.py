@@ -180,10 +180,6 @@ class ParserCBRF:
             self.ag_prices[ag_date] = ag_header, ag_price
             self.pt_prices[pt_date] = pt_header, pt_price
             self.pd_prices[pd_date] = pd_header, pd_price
-            print(self.au_prices,
-                  self.ag_prices,
-                  self.pt_prices,
-                  self.pd_prices)
             pass
 
     def __save_file(self):
