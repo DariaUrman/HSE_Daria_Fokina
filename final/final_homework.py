@@ -131,6 +131,7 @@ import json
 import os
 from datetime import date
 
+
 class ParserCBRF:
     def __init__(self):
         self.url = f"http://cbr.ru/hd_base/metall/metall_base_new/?" \
@@ -193,10 +194,33 @@ class ParserCBRF:
         self.__get_prices_soup()
         self.__save_file()
 
+
 def main():
     parser = ParserCBRF()
     parser.start()
     print("stop")
+
+
+if __name__ == "__main__":
+    main()
+    print("stop")
+
+
+class MetalINFO:
+
+    def __init__(self):
+        pass
+
+    def get_gold_prices(self):
+        with open('metal_prices.json', "r") as file:
+            prices_data = json.load(file)
+            gold_by_date = prices_data[0]
+            print(gold_by_date)
+
+    def main():
+        metal = MetalINFO()
+        gold = metal.get_gold_prices()
+        print(gold)
 
 
 if __name__ == "__main__":
