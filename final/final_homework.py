@@ -205,7 +205,7 @@ if __name__ == "__main__":
     main()
     print("stop")
 
-# separate class for search of metal type prices
+# separate class for search of metal type prices and price on exact date
 from settings import BASE_DIR
 
 
@@ -219,38 +219,56 @@ class MetalINFO:
         gold = self.prices_data[0]
         return gold
 
-    def get_gold_data_by_date(self, i):
-        for data in self.prices_data:
-            if i in data:
-                return data[i]
-            result = self.get_gold_data_by_date(self.prices_data, i)
-            print(result)
+    def get_gold_data_by_date(self):
+        gold_dict = self.get_gold_prices()
+        gold_value = gold_dict.get("14.06.2023")
+        print(gold_value)
 
     def get_silver_prices(self):
         silver = self.prices_data[1]
         return silver
 
+    def get_silver_data_by_date(self):
+        silver_dict = self.get_silver_prices()
+        silver_value = silver_dict.get("10.06.2023")
+        print(silver_value)
+
     def get_platinum_prices(self):
         platinum = self.prices_data[2]
         return platinum
+
+    def get_platinum_data_by_date(self):
+        platinum_dict = self.get_platinum_prices()
+        platinum_value = platinum_dict.get("16.04.2013")
+        print(platinum_value)
 
     def get_palladium_prices(self):
         palladium = self.prices_data[3]
         return palladium
 
+    def get_palladium_data_by_date(self):
+        palladium_dict = self.get_palladium_prices()
+        palladium_value = palladium_dict.get("22.03.2023")
+        print(palladium_value)
 
 def main():
     metal = MetalINFO()
     gold = metal.get_gold_prices()
-    get_date = metal.get_gold_data_by_date("14.06.2023")
-    silver = metal.get_silver_prices()
-    platinum = metal.get_platinum_prices()
-    palladium = metal.get_palladium_prices()
     print(gold, sep="\n")
-    print(get_date)
+    get_g_date = metal.get_gold_data_by_date()
+    print(get_g_date)
+    silver = metal.get_silver_prices()
     print(silver, sep="\n")
+    get_s_date = metal.get_silver_data_by_date()
+    print(get_s_date)
+    platinum = metal.get_platinum_prices()
     print(platinum, sep="\n")
+    get_p_date = metal.get_platinum_data_by_date()
+    print(get_p_date)
+    palladium = metal.get_palladium_prices()
     print(palladium, sep="\n")
+    get_pa_date = metal.get_palladium_data_by_date()
+    print(get_pa_date)
 
 
 if __name__ == "__main__":
