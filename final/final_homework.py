@@ -124,6 +124,8 @@ Output:
 Методы, указанные выше, являются примером для ключевой ставки. Список методов класса для работы с данными должен быть составлен в зависимости от вида данных, которые вы выбрали.
 
 """
+
+
 # parcer for metal prices
 import requests
 from bs4 import BeautifulSoup
@@ -133,6 +135,7 @@ from datetime import date
 
 
 class ParserCBRF:
+
     def __init__(self):
         self.url = f"http://cbr.ru/hd_base/metall/metall_base_new/?" \
                    f"UniDbQuery.Posted=True&" \
@@ -205,11 +208,13 @@ if __name__ == "__main__":
     main()
     print("stop")
 
+
 # separate class for search of metal type prices and price on exact date
 from settings import BASE_DIR
 
 
 class MetalINFO:
+
     def __init__(self):
         with open(os.path.join(BASE_DIR, "final", "parsed_data", "metal_prices.json"), "r") as file:
             self.prices_data = json.load(file)
@@ -222,7 +227,7 @@ class MetalINFO:
     def get_gold_data_by_date(self):
         gold_dict = self.get_gold_prices()
         gold_value = gold_dict.get("14.06.2023")
-        print(gold_value)
+        return gold_value
 
     def get_silver_prices(self):
         silver = self.prices_data[1]
@@ -231,7 +236,7 @@ class MetalINFO:
     def get_silver_data_by_date(self):
         silver_dict = self.get_silver_prices()
         silver_value = silver_dict.get("10.06.2023")
-        print(silver_value)
+        return silver_value
 
     def get_platinum_prices(self):
         platinum = self.prices_data[2]
@@ -240,7 +245,7 @@ class MetalINFO:
     def get_platinum_data_by_date(self):
         platinum_dict = self.get_platinum_prices()
         platinum_value = platinum_dict.get("16.04.2013")
-        print(platinum_value)
+        return platinum_value
 
     def get_palladium_prices(self):
         palladium = self.prices_data[3]
@@ -249,7 +254,8 @@ class MetalINFO:
     def get_palladium_data_by_date(self):
         palladium_dict = self.get_palladium_prices()
         palladium_value = palladium_dict.get("22.03.2023")
-        print(palladium_value)
+        return palladium_value
+
 
 def main():
     metal = MetalINFO()
