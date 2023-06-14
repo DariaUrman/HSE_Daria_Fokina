@@ -124,7 +124,7 @@ Output:
 Методы, указанные выше, являются примером для ключевой ставки. Список методов класса для работы с данными должен быть составлен в зависимости от вида данных, которые вы выбрали.
 
 """
-
+# parcer for metal prices
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -205,22 +205,52 @@ if __name__ == "__main__":
     main()
     print("stop")
 
+# separate class for search of metal type prices
+from settings import BASE_DIR
+
 
 class MetalINFO:
-
     def __init__(self):
-        pass
+        with open(os.path.join(BASE_DIR, "final", "parsed_data", "metal_prices.json"), "r") as file:
+            self.prices_data = json.load(file)
+            pass
 
     def get_gold_prices(self):
-        with open('metal_prices.json', "r") as file:
-            prices_data = json.load(file)
-            gold_by_date = prices_data[0]
-            print(gold_by_date)
+        gold = self.prices_data[0]
+        return gold
 
-    def main():
-        metal = MetalINFO()
-        gold = metal.get_gold_prices()
-        print(gold)
+    def get_gold_data_by_date(self, i):
+        for data in self.prices_data:
+            if i in data:
+                return data[i]
+            result = self.get_gold_data_by_date(self.prices_data, i)
+            print(result)
+
+    def get_silver_prices(self):
+        silver = self.prices_data[1]
+        return silver
+
+    def get_platinum_prices(self):
+        platinum = self.prices_data[2]
+        return platinum
+
+    def get_palladium_prices(self):
+        palladium = self.prices_data[3]
+        return palladium
+
+
+def main():
+    metal = MetalINFO()
+    gold = metal.get_gold_prices()
+    get_date = metal.get_gold_data_by_date("14.06.2023")
+    silver = metal.get_silver_prices()
+    platinum = metal.get_platinum_prices()
+    palladium = metal.get_palladium_prices()
+    print(gold, sep="\n")
+    print(get_date)
+    print(silver, sep="\n")
+    print(platinum, sep="\n")
+    print(palladium, sep="\n")
 
 
 if __name__ == "__main__":
