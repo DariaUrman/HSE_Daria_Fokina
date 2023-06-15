@@ -126,7 +126,7 @@ Output:
 """
 
 
-# parcer for metal prices
+# парсер цен на драгметаллы
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -209,7 +209,7 @@ if __name__ == "__main__":
     print("stop")
 
 
-# separate class for search of metal type prices and price on exact date
+# выгрузка цен по виду металла и цены металла по дате
 from settings import BASE_DIR
 
 
