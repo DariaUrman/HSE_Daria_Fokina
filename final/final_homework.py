@@ -191,7 +191,7 @@ class ParserCBRF:
         if not os.path.exists("parsed_data"):
             os.makedirs("parsed_data")
         with open(os.path.join("parsed_data", "metal_prices.json"), "w") as file:
-            json.dump(prices, file, ensure_ascii=False)
+            json.dump(prices, file, ensure_ascii=False, indent=4)
 
     def start(self):
         self.__get_prices_soup()
